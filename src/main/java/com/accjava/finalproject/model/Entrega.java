@@ -1,44 +1,37 @@
 package com.accjava.finalproject.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Drones")
-public class Drone {
+@Table(name = "Entregas")
+public class Entrega {
   
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "marca")
-  private String marca;
+  @Column(name = "latitude")
+  private String latitude;
 
-  @Column(name = "modelo")
-  private String modelo;
+  @Column(name = "longitude")
+  private String longitude;
 
   @Column(name = "status")
   private String status;
 
-  public Drone(){};
+  public Entrega(){}
 
-  public Drone(Long id, String marca, String modelo) {
+  public Entrega(Long id, String latitude, String longitude) {
     super();
     this.id = id;
-    this.marca = marca;
-    this.modelo = modelo;
+    this.latitude = latitude;
+    this.longitude = longitude;
   }
-
   public Long getId() {
     return id;
   }
@@ -47,20 +40,20 @@ public class Drone {
     this.id = id;
   }
 
-  public String getMarca() {
-    return marca;
+  public String getLatitude() {
+    return latitude;
   }
 
-  public void setMarca(String marca) {
-    this.marca = marca;
+  public void setLatitude(String latitude) {
+    this.latitude = latitude;
   }
 
-  public String getModelo() {
-    return modelo;
+  public String getLongitude() {
+    return longitude;
   }
 
-  public void setModelo(String modelo) {
-    this.modelo = modelo;
+  public void setLongitude(String longitude) {
+    this.longitude = longitude;
   }
 
   public String getStatus() {
@@ -70,4 +63,5 @@ public class Drone {
   public void setStatus(String status) {
     this.status = status;
   }
+  
 }

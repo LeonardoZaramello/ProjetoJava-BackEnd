@@ -14,41 +14,41 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.accjava.finalproject.model.Drone;
-import com.accjava.finalproject.service.DroneService;
+import com.accjava.finalproject.model.Entrega;
+import com.accjava.finalproject.service.EntregaService;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/drones")
-public class DroneController {
+@RequestMapping("/entregas")
+public class EntregaController {
   
   @Autowired
-  private DroneService droneService;
+  private EntregaService entregaService;
 
   @GetMapping
-  public List<Drone> getAllDrones() {
-    return droneService.getAllDrones();
-  }
-
-  @PostMapping
-  public Drone createDrone(@RequestBody Drone drone) {
-    drone.setStatus("disponivel");
-    return droneService.createDrone(drone);
+  public List<Entrega> getAllEntregas() {
+    return entregaService.getAllEntregas();
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Drone> getAllDroneById(@PathVariable Long id) {
-    return droneService.getAllDroneById(id);
+  public ResponseEntity<Entrega> getAllDroneById(@PathVariable Long id) {
+    return entregaService.getAllEntregaById(id);
+  }
+
+  @PostMapping
+  public Entrega createDrone(@RequestBody Entrega entrega) {
+    entrega.setStatus("Em transito");
+    return entregaService.createEntrega(entrega);
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<Drone> updateDrone(@PathVariable Long id, @RequestBody Drone drone) {
-    return droneService.updateDrone(id, drone);
+  public ResponseEntity<Entrega> updateDrone(@PathVariable Long id, @RequestBody Entrega entrega) {
+    return entregaService.updateEntrega(id, entrega);
   }
 
   @DeleteMapping("/{id}")
   public ResponseEntity<Map<String, Boolean>> deleteDrone(@PathVariable Long id) {
-    return droneService.deleteDrone(id);
+    return entregaService.deleteEntrega(id);
   }
+
 }
