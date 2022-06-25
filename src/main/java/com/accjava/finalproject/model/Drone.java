@@ -10,8 +10,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "Drones")
@@ -30,13 +34,28 @@ public class Drone {
   @Column(name = "status")
   private String status;
 
-  public Drone(){};
+  @JsonManagedReference
+  @OneToMany(mappedBy = "drone", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<Entrega> entregas;
+
+  public Drone(){
+    super();
+    this.entregas = new ArrayList<>();
+  };
 
   public Drone(Long id, String marca, String modelo) {
-    super();
     this.id = id;
     this.marca = marca;
     this.modelo = modelo;
+    this.entregas = new ArrayList<>();
+  }
+
+  public List<Entrega> getEntregas() {
+    return this.entregas;
+  }
+
+  public void addEntrega(Entrega entrega) {
+    this.entregas.add(entrega);
   }
 
   public Long getId() {

@@ -5,7 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "Entregas")
@@ -24,6 +28,11 @@ public class Entrega {
   @Column(name = "status")
   private String status;
 
+  @JsonBackReference
+  @ManyToOne
+  @JoinColumn(name = "drone_id")
+  private Drone drone;
+
   public Entrega(){}
 
   public Entrega(Long id, String latitude, String longitude) {
@@ -32,6 +41,16 @@ public class Entrega {
     this.latitude = latitude;
     this.longitude = longitude;
   }
+
+  
+  public Drone getDrone() {
+    return drone;
+  }
+
+  public void setDrone(Drone drone) {
+    this.drone = drone;
+  }
+
   public Long getId() {
     return id;
   }

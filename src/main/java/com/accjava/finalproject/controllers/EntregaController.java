@@ -37,7 +37,6 @@ public class EntregaController {
 
   @PostMapping
   public Entrega createDrone(@RequestBody Entrega entrega) {
-    entrega.setStatus("Em transito");
     return entregaService.createEntrega(entrega);
   }
 
