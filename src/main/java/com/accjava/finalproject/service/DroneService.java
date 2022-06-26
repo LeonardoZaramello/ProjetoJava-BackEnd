@@ -34,7 +34,6 @@ public class DroneService {
 
   public ResponseEntity<Drone> updateDrone(Long id, Drone drone) {
     Drone droneFound = droneRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Drone doesn't exist with id: " + id));
-
     droneFound.setMarca(drone.getMarca());
     droneFound.setModelo(drone.getModelo());
     
@@ -45,15 +44,11 @@ public class DroneService {
 
   public ResponseEntity<Map<String, Boolean>> deleteDrone(Long id) {
     Drone droneFound = droneRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Drone doesn't exist with id: " + id));
-
     droneRepository.delete(droneFound);
+
     Map<String, Boolean> response = new HashMap<>();
     response.put("Deleted", Boolean.TRUE);
 
     return ResponseEntity.ok(response);
   }
-
-
-
-
 }
