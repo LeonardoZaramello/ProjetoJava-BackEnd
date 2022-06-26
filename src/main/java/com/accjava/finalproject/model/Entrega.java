@@ -28,6 +28,12 @@ public class Entrega {
   @Column(name = "status")
   private String status;
 
+  @Column(name = "data_saida")
+  private String dataSaida;
+
+  @Column(name = "data_entrega")
+  private String dataEntrega;
+
   @JsonBackReference
   @ManyToOne
   @JoinColumn(name = "drone_id")
@@ -43,6 +49,22 @@ public class Entrega {
   }
 
   
+  public String getDataSaida() {
+    return dataSaida;
+  }
+
+  public void setDataSaida(String dataSaida) {
+    this.dataSaida = dataSaida;
+  }
+
+  public String getDataEntrega() {
+    return dataEntrega;
+  }
+
+  public void setDataEntrega(String dataEntrega) {
+    this.dataEntrega = dataEntrega;
+  }
+
   public Drone getDrone() {
     return drone;
   }

@@ -1,5 +1,7 @@
 package com.accjava.finalproject.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +46,9 @@ public class EntregaService {
     drone.addEntrega(entrega);
     drone.setStatus("Ocupado");
 
+    String dateNow = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss:SSS").format(new Date());
+    entrega.setDataSaida(dateNow);
+
     return entregaRepository.save(entrega);
   }
 
@@ -78,19 +83,24 @@ public class EntregaService {
 
 
   public ResponseEntity<Entrega> updateEntregaStatus(Long id) {
+    // pega a entrega
     Entrega entregaFound = entregaRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Entrega doesn't exist with id: " + id));
   
+    // pega o drone
     Long droneId = entregaFound.getDrone().getId();
     Drone droneFound = droneRepository.findById(droneId).orElseThrow(() -> new ResourceNotFoundException("Drone doesn't exist with id: " + droneId));
   
-    droneFound.setStatus("Em transito");
+    // atualiza o drone
+    droneFound.setStatus("disponivel");
     droneRepository.save(droneFound);
   
+    String dateNow = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss:SSS").format(new Date());
+    // atualiza a entrega
     entregaFound.setStatus("Entregue");
-    Entrega updatedEntrega = entregaRepository.save(entregaFound);
+    entregaFound.setDataEntrega(dateNow);
+    Entrega entregaStatusUpdated = entregaRepository.save(entregaFound);
   
-  
-    return ResponseEntity.ok(updatedEntrega);
+    return ResponseEntity.ok(entregaStatusUpdated);
   }
 }
   

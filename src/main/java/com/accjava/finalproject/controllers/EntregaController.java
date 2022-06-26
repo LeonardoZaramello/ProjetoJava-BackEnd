@@ -31,22 +31,28 @@ public class EntregaController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Entrega> getAllDroneById(@PathVariable Long id) {
+  public ResponseEntity<Entrega> getAllEntregaById(@PathVariable Long id) {
     return entregaService.getAllEntregaById(id);
   }
 
   @PostMapping
-  public Entrega createDrone(@RequestBody Entrega entrega) {
+  public Entrega createEntrega(@RequestBody Entrega entrega) {
     return entregaService.createEntrega(entrega);
   }
 
+
   @PutMapping("/{id}")
-  public ResponseEntity<Entrega> updateDrone(@PathVariable Long id, @RequestBody Entrega entrega) {
+  public ResponseEntity<Entrega> updateEntrega(@PathVariable Long id, @RequestBody Entrega entrega) {
     return entregaService.updateEntrega(id, entrega);
   }
 
+  @PutMapping("/entrega-status/{id}")
+  public ResponseEntity<Entrega> updateEntregaStatus(@PathVariable Long id) {
+    return entregaService.updateEntregaStatus(id);
+  }
+
   @DeleteMapping("/{id}")
-  public ResponseEntity<Map<String, Boolean>> deleteDrone(@PathVariable Long id) {
+  public ResponseEntity<Map<String, Boolean>> deleteEntrega(@PathVariable Long id) {
     return entregaService.deleteEntrega(id);
   }
 
