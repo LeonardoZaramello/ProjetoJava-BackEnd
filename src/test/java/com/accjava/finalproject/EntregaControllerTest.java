@@ -11,7 +11,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+
+import com.accjava.finalproject.model.Drone;
 import com.accjava.finalproject.model.Entrega;
+import com.accjava.finalproject.repository.DroneRepository;
 import com.accjava.finalproject.repository.EntregaRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -26,8 +29,16 @@ public class EntregaControllerTest {
   @Autowired
   private EntregaRepository entregaRepository;
 
-  Entrega entregaMock = new Entrega(null, "55.984", "98.231");
-  
+  @Autowired
+  private DroneRepository droneRepository;
+
+  public Entrega getEntrega() {
+    Entrega entregaMockAtt = new Entrega(null, "55.984", "98.231");
+    entregaMockAtt.setStatus("Em transito");
+    return entregaMockAtt;
+  }
+
+  Entrega entregaMock = getEntrega();
 
   @DisplayName("1 - Deve checar a rota base com status ok.")
   @Test
@@ -43,6 +54,9 @@ public class EntregaControllerTest {
   @Test
   @Order(2)
   void cadastrarDroneOk() throws Exception {
+    Drone droneMock = new Drone(null, "Marca", "Modelo");
+    droneMock.setStatus("disponivel");
+    this.droneRepository.save(droneMock);
 
     mockMvc.perform(post("/entregas").contentType("application/json").content(new ObjectMapper().writeValueAsString(entregaMock)))
       .andExpect(status().isOk())

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -30,15 +31,21 @@ public class DroneControllerTest {
   @Autowired
   private DroneRepository droneRepository;
   
-  Drone droneMock = new Drone(null, "Marca", "Modelo");
+  public Drone getDrone() {
+    Drone droneMockAtt = new Drone(null, "Marca", "Modelo");
+    droneMockAtt.setStatus("disponivel");
+    return droneMockAtt;
+  }
 
-  
+  Drone droneMock = getDrone();
+
+
   @DisplayName("1 - Deve checar a rota base com status ok.")
   @Test
   @Order(1)
   void endPointOk() throws Exception {
     mockMvc.perform(get("/drones").contentType("application/json").content("[]"))
-    .andExpect(status().isOk());
+      .andExpect(status().isOk());
     
   }
 
@@ -60,7 +67,6 @@ public class DroneControllerTest {
   void testDroneFound() throws Exception {
 
     Drone droneSaved = this.droneRepository.save(droneMock);
-
     mockMvc.perform(get("/drones/" + droneSaved.getId()))
       .andExpect(status().isOk())
       .andExpect(jsonPath("$.id").value(droneSaved.getId()))
@@ -79,9 +85,7 @@ public class DroneControllerTest {
   @Test
   @Order(5)
   void testUpdateDrone() throws Exception {
-
     Drone droneSaved = this.droneRepository.save(droneMock);
-
     Drone droneForUpdate = new Drone(null, "Marca2", "Modelo2");
 
     mockMvc.perform(put("/drones/" + droneSaved.getId()).contentType("application/json").content(new ObjectMapper().writeValueAsString(droneForUpdate)))
@@ -96,7 +100,7 @@ public class DroneControllerTest {
   @Order(6)
   void testDeleteDrone() throws Exception {
     Drone droneSaved = this.droneRepository.save(droneMock);
-
+    
     mockMvc.perform(delete("/drones/" + droneSaved.getId()))
     .andExpect(status().isOk())
     .andExpect(jsonPath("$.Deleted").value(true));
