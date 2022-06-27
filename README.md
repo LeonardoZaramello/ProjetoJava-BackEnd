@@ -1,5 +1,5 @@
 
-# ProjetoJava-BackEnd
+# ProjetoJava- Drone Feeder App
 
 Repositório para entrega final da aceleração de Java na Trybe
 
